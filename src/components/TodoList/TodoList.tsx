@@ -19,7 +19,6 @@ export const TodoList: React.FC<Props> = ({
 }) => {
   const [isDeleting, setDeleting] = useState(0);
 
-  // Delete Todo
   const deleteTodo = async (todoId: number) => {
     setDeleting(todoId);
 

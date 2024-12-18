@@ -4,14 +4,13 @@ import { Todo } from '../types/Todo';
 // filters Todo list using certain status as a filter
 export const filterTodos = (status: StatusFilter, todos: Todo[]) => {
   return todos.filter(todo => {
-    if (status === StatusFilter.Completed) {
-      return todo.completed;
+    switch (status) {
+      case StatusFilter.Active:
+        return !todo.completed;
+      case StatusFilter.Completed:
+        return todo.completed;
+      default:
+        return true;
     }
-
-    if (status === StatusFilter.Active) {
-      return !todo.completed;
-    }
-
-    return true;
   });
 };
