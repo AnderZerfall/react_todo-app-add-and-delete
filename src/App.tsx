@@ -33,7 +33,7 @@ export const App: React.FC = () => {
   };
 
   useEffect(() => {
-    (async () => {
+    const getTodos = async () => {
       try {
         const todos = await todoServices.getTodos();
 
@@ -41,14 +41,16 @@ export const App: React.FC = () => {
       } catch {
         sendError(ErrorType.LOAD_TODOS);
       }
-    })();
+    };
+
+    getTodos();
   }, []);
 
   const filteredTodos = filterTodos(statusFilter, todoList);
   const activeTodosCount = todoList.filter(todo => !todo.completed).length;
   const hasCompletedTodos = todoList.length > activeTodosCount;
 
-  const clearCompleted = async () => {
+  const handleClearCompleted = async () => {
     const completedTodos = todoList.filter(todo => todo.completed);
 
     for (const todo of completedTodos) {
@@ -80,7 +82,7 @@ export const App: React.FC = () => {
           todoList={todoList}
         />
 
-        {todoList.length > 0 && (
+        {!!todoList.length && (
           <>
             <TodoList
               todoList={filteredTodos}
@@ -93,7 +95,7 @@ export const App: React.FC = () => {
               statusFilter={statusFilter}
               countActiveTodos={activeTodosCount}
               hasCompletedTodos={hasCompletedTodos}
-              clearCompleted={clearCompleted}
+              clearCompleted={handleClearCompleted}
             />
           </>
         )}
